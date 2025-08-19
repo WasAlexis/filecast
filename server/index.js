@@ -1,7 +1,7 @@
 /* this is the entry point for the server */
 
 import http from 'http';
-import { WebSocketServer } from 'ws';
+import { WebSocketServer, WebSocket } from 'ws';
 
 process.loadEnvFile('./.env');
 
@@ -17,9 +17,12 @@ const wss = new WebSocketServer({ server });
 wss.on('connection', (ws) => {
     console.log('New client connected');
 
-    ws.on('message', (message) => {
-        console.log(`Received message: ${message}`);
-        ws.send(`Echo: ${message}`);
+    ws.on('message', (data) => {
+        wss.clients.forEach((client) => {
+            if (client.readyState === WebSocket.OPEN && client !== ws) {
+                client.send(data);
+            }
+        })
     });
 
     ws.on('close', () => {
