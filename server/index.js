@@ -1,38 +1,56 @@
-/* this is the entry point for the server */
-
-import { WebSocketServer, WebSocket } from 'ws';
+import http from 'node:http';
+import { WebSocketServer } from 'ws';
+import path from 'node:path';
+import fs from 'node:fs';
 
 process.loadEnvFile('./.env');
-let clients = [];
 
 const port = process.env.PORT || 3000;
 
-const wss = new WebSocketServer({ port });
+const server = http.createServer((req, res) => {
+    let filePath = path.join(process.cwd(), '../client', req.url === '/' ? 'index.html' : req.url);
+    const ext = path.extname(filePath).toLocaleLowerCase();
 
-function broadcast(data, sender) {
-    wss.clients.forEach((client) => {
-        if (client !== sender && client.readyState === WebSocket.OPEN) {
-            client.send(data);
+    const mimeTypes = {
+        '.html': 'text/html',
+        '.js': 'application/javascript',
+        '.css': 'text/css',
+        '.png': 'image/png',
+        '.jpg': 'image/jpeg',
+        '.gif': 'image/gif',
+        '.svg': 'image/svg+xml',
+        '.json': 'application/json'
+    };
+
+    const contentType = mimeTypes[ext] || 'application/octet-stream';
+
+    fs.readFile(filePath, (err, data) => {
+        if (err) {
+            res.writeHead(404, { 'Content-Type': 'text/plain' });
+            res.end('404 Not Found');
+        } else {
+            res.writeHead(200, { 'Content-Type': contentType });
+            res.end(data);
         }
-    })
-}
-
-wss.on('connection', (ws) => {
-    clients.push(ws);
-    const joinMessage = JSON.stringify({ type: 'user-joined', userId: ws._socket.remoteAddress });
-    broadcast(joinMessage, ws);
-    console.log('New client connected');
-
-    ws.on('message', (data) => {
-        broadcast(data, ws);
-    });
-
-    ws.on('close', () => {
-        const leaveMessage = JSON.stringify({ type: 'user-left', userId: ws._socket.remoteAddress });
-        broadcast(leaveMessage, ws);
-        console.log('Client disconnected');
-        clients = clients.filter(client => client !== ws);
     });
 });
 
-console.log(`WebSocket server is running on ws://localhost:${port}`);
+const wss = new WebSocketServer({ server });
+
+wss.on('connection', (socket) => {
+    console.log('New client connected');
+
+    socket.on('message', (message) => {
+        console.log(`Received message: ${message}`);
+        // Echo the message back to the client
+        socket.send(`Server received: ${message}`);
+    });
+
+    socket.on('close', () => {
+        console.log('Client disconnected');
+    });
+});
+
+server.listen(port, () => {
+    console.log(`Server is running on http://localhost:${port}`);
+});
