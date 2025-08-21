@@ -36,7 +36,7 @@ De momento esta es la lista de cosas que tengo en mente, tambien puedes aportar 
 ### Notas
 
 1. Mantén los commits pequeños y significativos.
-2. Si tienes alguna duda o quieres que te aclare algo o debatir sobre algunas practicas, puedes abrir un Issue y para conversarlo.
+2. Si tienes alguna duda o quieres que te aclare algo o debatir sobre algunas practicas, puedes ir al apartado de Discussions y para conversarlo.
 
 Ya con eso lo reviso y lo implemento en el codigo.
 
