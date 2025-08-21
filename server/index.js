@@ -3,6 +3,7 @@
 import { WebSocketServer, WebSocket } from 'ws';
 
 process.loadEnvFile('./.env');
+let clients = [];
 
 const port = process.env.PORT || 3000;
 
@@ -17,6 +18,7 @@ function broadcast(data, sender) {
 }
 
 wss.on('connection', (ws) => {
+    clients.push(ws);
     const joinMessage = JSON.stringify({ type: 'user-joined', userId: ws._socket.remoteAddress });
     broadcast(joinMessage, ws);
     console.log('New client connected');
@@ -29,6 +31,7 @@ wss.on('connection', (ws) => {
         const leaveMessage = JSON.stringify({ type: 'user-left', userId: ws._socket.remoteAddress });
         broadcast(leaveMessage, ws);
         console.log('Client disconnected');
+        clients = clients.filter(client => client !== ws);
     });
 });
 

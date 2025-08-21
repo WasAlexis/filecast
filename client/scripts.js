@@ -3,6 +3,57 @@
 const ws = new WebSocket('ws://localhost:3000');
 ws.binaryType = 'arraybuffer';
 
+const peer = new RTCPeerConnection();
+
+const dataChannel = peer.createDataChannel('fileChannel');
+
+dataChannel.onopen = () => {
+    console.log('Data channel is open');
+}
+
+dataChannel.onmessage = (event) => {
+    console.log('Received message: ', event.data);
+};
+
+// When recibe a ice candidate
+peer.onicecandidate = (event) => {
+    if (event.candidate) {
+        ws.send(JSON.stringify({ type: 'ice', candidate: event.candidate}));
+    }
+};
+
+peer.ondatachannel = (event) => {
+    const channel = event.channel;
+    channel.onmessage = (event) => {
+        console.log('Received data channel message: ', event.data);
+    }
+};
+
+ws.onmessage = async (event) => {
+    const signal = JSON.parce(event.data);
+
+    if (signal.type === 'offer') {
+        await peer.setRemoteDescription(new RTCSessionDescription(signal));
+        const answer = await peer.createAsnwer();
+        await peer.setLocalDescription(answer);
+        ws.send(JSON.stringify({ type: 'answer', sdp: answer.sdp}));
+    } else if (signal.type === 'answer') {
+        await peer.setRemoteDescription(new RTCSessionDescription(signal));
+    } else if (signal.type === 'ice') {
+        await peer.addIceCandidate(signal.candidate);
+    } else {
+        console.error('Unknown signal type: ', signal.type);
+    }
+};
+
+async function initConnection() {
+    const offer = await peer.createOffer();
+    await peer.setLocalDescription(offer);
+    ws.send(JSON.stringify(offer));
+}
+
+setTimeout(initConnection, 1000);
+
 ws.addEventListener('open', () => {
     console.log('Connected to Filecast');
 });
