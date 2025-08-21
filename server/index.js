@@ -17,7 +17,7 @@ function broadcast(data, sender) {
 }
 
 wss.on('connection', (ws) => {
-    const joinMessage = JSON.stringify({ type: 'user-joined'});
+    const joinMessage = JSON.stringify({ type: 'user-joined', userId: ws._socket.remoteAddress });
     broadcast(joinMessage, ws);
     console.log('New client connected');
 
@@ -26,7 +26,7 @@ wss.on('connection', (ws) => {
     });
 
     ws.on('close', () => {
-        const leaveMessage = JSON.stringify({ type: 'user-left' });
+        const leaveMessage = JSON.stringify({ type: 'user-left', userId: ws._socket.remoteAddress });
         broadcast(leaveMessage, ws);
         console.log('Client disconnected');
     });

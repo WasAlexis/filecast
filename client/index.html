@@ -7,8 +7,23 @@
     <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
-    <h1>Welcome to FileCast</h1>
-    <input type="file" name="box" id="fileBox">
+    <div class="app">
+        <header>
+            <h1>FileCast</h1>
+        </header>
+        <div class="member-list" id="memberList">
+            <div class="user-device">
+                <input type="file" id="fileBox">
+                <label for="fileBox" class="device">
+                    <img src="./assets/svg/broadcast.svg" alt="device icon">
+                    <h3>User</h3>
+                </label>
+            </div>
+        </div>
+        <footer>
+            <!-- ToDo -->
+        </footer>
+    </div>
     <script src="./scripts.js"></script>
 </body>
 </html>

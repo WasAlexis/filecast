@@ -8,6 +8,31 @@ ws.addEventListener('open', () => {
 });
 
 const fileBox = document.getElementById('fileBox');
+const userList = document.getElementById('memberList');
+
+function joinNewUser(id) {
+    const newUser = document.createElement('div');
+    newUser.id = id;
+    newUser.innerHTML = `
+    <input type="file" id="fileBox">
+    <label for="fileBox" class="device">
+        <img src="./assets/svg/broadcast.svg" alt="device icon">
+            <h3>Device</h3>
+    </label>`;
+    newUser.classList.add('user-device');
+    userList.appendChild(newUser);
+    console.log(`${id} has joined the room`);
+}
+
+function leaveUser(id) {
+    const user = document.getElementById(id);
+    if (user) {
+        user.remove();
+        console.log(`${id} has left the room`);
+    } else {
+        console.error(`User with id ${id} not found`);
+    }
+}
 
 function downloadFile(buffer) {
     const view = new DataView(buffer);
@@ -59,9 +84,9 @@ ws.addEventListener('message', (event) => {
     } else {
         const message = JSON.parse(event.data);
         if (message.type === 'user-joined') {
-            console.log('A new user has joined the chat');
+            joinNewUser(message.userId);
         } else if (message.type === 'user-left') {
-            console.log('A user has left the chat');
+            leaveUser(message.userId);
         } else {
             console.log('Unknown message type: ', message.type);
         }
