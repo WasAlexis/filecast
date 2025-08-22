@@ -7,6 +7,9 @@ Este proyecto aún está en una etapa temprana de desarrollo. A continuación se
 - [ ] **Notificación de presencia de usuarios**  
   Mostrar en la interfaz cuando un nuevo usuario entra o sale de la sala, esto puede mostrar un icono en el centro junto con algun nombre que lo identifique.
 
+- [ ] **Autorizar desde el otro dispositivo la tranferencia**
+  Cuando se seleccione a un dispositivo, este debe de confirmar que quiere recibir el archivo.
+
 - [ ] **Progreso de transferencia de archivos**  
   Visualizar el porcentaje de subida/descarga para archivos grandes.
 
