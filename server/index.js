@@ -65,6 +65,7 @@ wss.on('connection', (socket) => {
     socket.on('close', () => {
         console.log('Client disconnected');
         clients.delete(clientId);
+        broadcast({ type: 'leave', id: clientId }, socket);
     });
 });
 

@@ -26,7 +26,6 @@ function createConnection(targetId) {
     }
   };
 
-  // Testing
   peerConnection.ondatachannel = (e) => {
     dataChannel = e.channel;
     dataChannel.onmessage = (e) => {
@@ -79,7 +78,10 @@ ws.onmessage = async (event) => {
       alert(`My client ID is ${clientId}`);
       break;
     case 'join':
-      console.log('An user conected: ' + message.id);
+      joinNewUser(message.id);
+      break;
+    case 'leave':
+      leaveUser(message.id);
       break;
     case 'offer':
       console.log('Received offer: ', message.from);
@@ -106,11 +108,10 @@ function joinNewUser(id) {
     const newUser = document.createElement('div');
     newUser.id = id;
     newUser.innerHTML = `
-    <input type="file" id="fileBox">
-    <label for="fileBox" class="device">
+    <div class="device" onclick="sendOffer('${id}')">
         <img src="./assets/svg/broadcast.svg" alt="device icon">
-            <h3>Device</h3>
-    </label>`;
+            <h3>device</h3>
+    </div>`;
     newUser.classList.add('user-device');
     userList.appendChild(newUser);
     console.log(`${id} has joined the room`);
