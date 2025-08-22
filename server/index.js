@@ -2,6 +2,7 @@ import http from 'node:http';
 import { WebSocketServer } from 'ws';
 import path from 'node:path';
 import fs from 'node:fs';
+import { v4 as uuidv4 } from 'uuid';
 
 process.loadEnvFile('./.env');
 
@@ -36,18 +37,34 @@ const server = http.createServer((req, res) => {
 });
 
 const wss = new WebSocketServer({ server });
+const clients = new Map();
+
+function broadcast (data, sender) {
+    wss.clients.forEach((client) => {
+        if (client.readyState === client.OPEN && client !== sender) {
+            client.send(JSON.stringify(data));
+        }
+    });
+}
 
 wss.on('connection', (socket) => {
     console.log('New client connected');
+    const clientId = uuidv4();
+    clients.set(clientId, socket);
+
+    socket.send(JSON.stringify({ type: 'id', id: clientId }));
+    broadcast({ type: 'join', id: clientId }, socket);
 
     socket.on('message', (message) => {
-        console.log(`Received message: ${message}`);
-        // Echo the message back to the client
-        socket.send(`Server received: ${message}`);
+        const msg = JSON.parse(message);
+        if (msg.target && clients.has(msg.target)) {
+            clients.get(msg.target).send(JSON.stringify({ ...msg, from: clientId }));
+        }
     });
 
     socket.on('close', () => {
         console.log('Client disconnected');
+        clients.delete(clientId);
     });
 });
 
