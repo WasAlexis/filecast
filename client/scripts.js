@@ -6,6 +6,8 @@ let clientId;
 const members = new Map();
 let peerConnection;
 let dataChannel;
+let incomingFile = null;
+let ReceivedBuffers = [];
 
 function createConnection(targetId) {
   peerConnection = new RTCPeerConnection();
@@ -17,7 +19,7 @@ function createConnection(targetId) {
   };
 
   dataChannel.onmessage = (e) => {
-    alert('Message: ' + e.data);
+    assamblyFile(e);
   };
 
   peerConnection.onicecandidate = (e) => {
@@ -29,6 +31,7 @@ function createConnection(targetId) {
   peerConnection.ondatachannel = (e) => {
     dataChannel = e.channel;
     dataChannel.onmessage = (e) => {
+      assamblyFile(e);
       console.log('Mensaje remoto: ' + e.data);
     };
 
@@ -62,6 +65,61 @@ function sendMessage(msg) {
     console.log('Mensaje enviado!');
   } else {
     console.log('No hay ninguna conexion aun');
+  }
+}
+
+async function sendFile() {
+  const file = document.getElementById('fileInput').files[0];
+
+  if (!dataChannel || dataChannel.readyState !== 'open') {
+    console.error('Datachannel not open');
+    return;
+  }
+
+  const chunkSize = 16 * 1024; // 16KB
+  const arrayBuffer = await file.arrayBuffer();
+
+  dataChannel.send(JSON.stringify({
+    type: 'file-meta',
+    fileName: file.name,
+    fileSize: arrayBuffer.byteLength
+  }));
+
+  for (let i = 0; i < arrayBuffer.byteLength; i += chunkSize) {
+    const chunk = arrayBuffer.slice(i, i + chunkSize);
+    dataChannel.send(chunk);
+  }
+
+  dataChannel.send(JSON.stringify({ type: 'file-end' }));
+  console.log('Send is done');
+}
+
+function assamblyFile(res) {
+  if (typeof res.data === "string") {
+    try {
+      const msg = JSON.parse(res.data);
+
+      if (msg.type === 'file-meta') {
+        incomingFile = { name: msg.name, size: msg.fileSize };
+        ReceivedBuffers = [];
+      } else if (msg.type === 'file-end') {
+        const Received = new Blob(ReceivedBuffers);
+        const link = URL.createObjectURL(Received);
+
+        const ancor = document.createElement('a');
+        ancor.href = link;
+        ancor.download = incomingFile.name;
+        ancor.click();
+
+        // when finish
+        incomingFile = null;
+        ReceivedBuffers = [];
+      }
+    } catch (error) {
+      console.log('Message received');
+    }
+  } else {
+    ReceivedBuffers.push(res.data);
   }
 }
 
