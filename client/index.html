@@ -4,21 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FileCast</title>
+    <link rel="shortcut icon" href="/assets/svg/broadcast.svg" type="image/svg+xml">
     <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
     <div class="app">
-        <header>
-            <h1>FileCast</h1>
-            <input type="file" id="fileInput">
-        </header>
-        <div class="member-list" id="memberList">
-            <div class="user-device">
+        <div class="box">
+            <div class="profile">
+                <div class="status"></div>
+                <div class="info">
+                    <h3>Mostrarme como</h3>
+                    <input type="text" id="userName">
+                </div>
+                <input type="file" id="fileInput">
+                <button onclick="sendFile()">Enviar</button>
+            </div>
+            <div class="device-list" id="deviceList">
             </div>
         </div>
-        <footer>
-            <!-- ToDo -->
-        </footer>
     </div>
     <script src="/scripts.js"></script>
 </body>

@@ -160,15 +160,16 @@ ws.onmessage = async (event) => {
 
 /* Interface */
 
-const userList = document.getElementById('memberList');
+const userList = document.getElementById('deviceList');
 
 function joinNewUser(id) {
   const newUser = document.createElement('div');
   newUser.id = id;
   newUser.innerHTML = `
-    <div class="device" onclick="sendOffer('${id}')">
-        <img src="./assets/svg/broadcast.svg" alt="device icon">
-            <h3>device</h3>
+    <div class="device">
+      <span>Desconocido</span>
+      <span class="identificator">id: ${id}</span>
+      <button onclick="sendOffer('${id}')")>Conectar</button>
     </div>`;
   newUser.classList.add('user-device');
   userList.appendChild(newUser);
