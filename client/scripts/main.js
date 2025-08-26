@@ -1,7 +1,58 @@
 /* start connection to server */
 
-const ws = new WebSocket(`ws://${window.location.host}`);
+import ws from "./signaling.js";
+import ClientWebRTC from "./webrtc.js";
 
+const clientRTC = new ClientWebRTC(ws);
+window.selectPeer = selectPeer;
+window.sendmsg = clientRTC.sendMessage;
+
+ws.addEventListener('message', async (e) => {
+  if (typeof e.data !== 'string') {
+    console.log("Is not a JSON");
+    return;
+  }
+
+  /* always received a JSON to select a case */
+  const msg = JSON.parse(e.data);
+
+  switch (msg.type) {
+    case 'id':
+      clientRTC.myClientId = msg.id;
+      console.log(clientRTC.myClientId);
+      break;
+    case 'message':
+      console.log('Received message: ' + msg);
+      break;
+    case 'join':
+      joinNewUser(msg.id);
+      console.log('New user: ' + msg.id);
+      break;
+    case 'leave':
+      leaveUser(msg.id);
+      console.log('An user left ' + msg.id);
+      break;
+    case 'offer':
+      console.log('Received offer ' + msg.from);
+      await clientRTC.handleOffer(msg);
+      break;
+    case 'answer':
+      console.log('Received answer ' + msg.from);
+      await clientRTC.peerConnection.setRemoteDescription(msg.answer);
+      break;
+    case 'ice':
+      console.log('Received ICE candidate');
+      await clientRTC.peerConnection.addIceCandidate(new RTCIceCandidate(msg.candidate));
+      break;
+  }
+});
+
+function selectPeer(id) {
+  clientRTC.targetId = id;
+  clientRTC.sendOffer();
+}
+
+/*
 let clientId;
 const members = new Map();
 let peerConnection;
@@ -157,7 +208,7 @@ ws.onmessage = async (event) => {
       console.log('Unknown message type :', message.type);
   }
 }
-
+*/
 /* Interface */
 
 const userList = document.getElementById('memberList');
@@ -166,7 +217,7 @@ function joinNewUser(id) {
   const newUser = document.createElement('div');
   newUser.id = id;
   newUser.innerHTML = `
-    <div class="device" onclick="sendOffer('${id}')">
+    <div class="device" onclick="selectPeer('${id}')">
         <img src="./assets/svg/broadcast.svg" alt="device icon">
             <h3>device</h3>
     </div>`;
