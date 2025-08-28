@@ -1,16 +1,15 @@
 /* resets */
 
 * {
-    margin: 0%;
-    padding: 0%;
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
 }
 
 :root {
-    --darker-color: #1c2023;
-    --dark-color: #212529;
-    --glass-color: #2b3035;
-    --glass-border-color: #495057;
+    --darker-color: #201f1d;
+    --gray-color: #8a8a8a;
+    --glass-border-color: #363533;
 }
 
 body {
@@ -19,58 +18,15 @@ body {
     background-color: var(--darker-color);
 }
 
-.app {
-    width: 100%;
-    height: 100%;
-}
-
-.app header {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    height: 10%;
-    border-bottom: 2px solid var(--glass-border-color);
-}
-
-.app header h1 {
+h1, h2, h3, span, input[type="text"] {
     font-family: sans-serif;
     color: whitesmoke;
 }
 
-.app .member-list {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 90%;
-}
-
-.app .member-list .user-device {
-    margin: 0px 1vw;
-}
-
-.app .member-list .user-device input {
-    display: none;
-}
-
-.app .member-list .user-device .device {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: calc(5vw + 5vh);
-    height: calc(5vw + 5vh);
-    background-color: var(--glass-color);
-    border-radius: 50%;
-    border: 2px solid var(--glass-border-color);
-    cursor: pointer;
-}
-
-.app .member-list .user-device .device h3 {
-    font-family: sans-serif;
-    color: whitesmoke;
-}
-
-.app .member-list .user-device .device img {
-    width: 40%;
+input[type="text"] {
+    font-weight: bold;
+    font-size: calc(0.5vw + 2vh);
+    background-color: transparent;
+    border: none;
+    outline: none;
 }

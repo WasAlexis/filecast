@@ -1,0 +1,31 @@
+/* main styles */
+
+.app {
+    width: 100%;
+    height: 100%;
+    align-content: center;
+}
+
+.app .box {
+    margin: 0 auto;
+    width: 75%;
+    height: 75%;
+    border: 2px solid var(--glass-border-color);
+    border-radius: calc(1vw + 1vh);
+}
+
+.app .box .profile {
+    display: flex;
+    align-items: center;
+    padding: 1vh 2vw;
+    width: 100%;
+    height: 15%;
+    border-bottom: 2px solid var(--glass-border-color);
+}
+
+.app .box .profile .information span {
+    display: block;
+    font-weight: 600;
+    font-size: calc(0.5vw + 1vh);
+    color: var(--gray-color);
+}
