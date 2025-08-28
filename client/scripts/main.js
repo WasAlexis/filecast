@@ -2,6 +2,7 @@
 
 import ws from "./signaling.js";
 import ClientWebRTC from "./webrtc.js";
+import { joinNewUser, leaveUser } from "./ui.js";
 
 const clientRTC = new ClientWebRTC(ws);
 window.selectPeer = selectPeer;
@@ -209,29 +210,3 @@ ws.onmessage = async (event) => {
   }
 }
 */
-/* Interface */
-
-const userList = document.getElementById('memberList');
-
-function joinNewUser(id) {
-  const newUser = document.createElement('div');
-  newUser.id = id;
-  newUser.innerHTML = `
-    <div class="device" onclick="selectPeer('${id}')">
-        <img src="./assets/svg/broadcast.svg" alt="device icon">
-            <h3>device</h3>
-    </div>`;
-  newUser.classList.add('user-device');
-  userList.appendChild(newUser);
-  console.log(`${id} has joined the room`);
-}
-
-function leaveUser(id) {
-  const user = document.getElementById(id);
-  if (user) {
-    user.remove();
-    console.log(`${id} has left the room`);
-  } else {
-    console.error(`User with id ${id} not found`);
-  }
-}

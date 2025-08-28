@@ -29,3 +29,35 @@
     font-size: calc(0.5vw + 1vh);
     color: var(--gray-color);
 }
+
+.app .box .device-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    justify-items: center;
+    padding: calc(1vw + 1vh);
+    height: 80%;
+    overflow-y: auto;
+}
+
+.app .box .device-list .device {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 1vh 0;
+    width: 95%;
+    min-height: 135px;
+    cursor: pointer;
+}
+
+.app .box .device-list .device img {
+    margin-bottom: 1vh;
+    width: 20%;
+}
+
+.app .box .device-list .device span {
+    text-align: center;
+}
+
+.app .box .device-list .device span.identifier {
+    color: var(--gray-color);
+}
