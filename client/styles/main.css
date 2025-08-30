@@ -16,6 +16,7 @@
 
 .app .box .profile {
     display: flex;
+    justify-content: space-between;
     align-items: center;
     padding: 1vh 2vw;
     width: 100%;
@@ -28,6 +29,38 @@
     font-weight: 600;
     font-size: calc(0.5vw + 1vh);
     color: var(--gray-color);
+}
+
+.app .box .profile .tools {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+.app .box .profile .tools input[type="file"] {
+    display: none;
+}
+
+.app .box .profile .tools button, .app .box .profile .tools label {
+    margin-left: 1vw;
+    width: 5vw;
+    height: 60%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: calc(1vw + 1vh);
+    border: 1px solid var(--gray-color);
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.tools label {
+    display: block;
+    background-image: url('../assets/svg/folder2.svg');
+}
+
+.tools button {
+    background-image: url('../assets/svg/cursor-fill.svg');
+    background-color: transparent;
 }
 
 .app .box .device-list {
