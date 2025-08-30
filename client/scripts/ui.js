@@ -1,6 +1,7 @@
 /* Javascript to manage user interface */
 
 const userList = document.getElementById('deviceList');
+const file = document.getElementById('inputFile').files[0];
 
 function joinNewUser(id) {
   const newUser = document.createElement('div');
@@ -25,4 +26,9 @@ function leaveUser(id) {
   }
 }
 
-export { joinNewUser, leaveUser };
+function sendFile() {
+  const file = document.getElementById('inputFile').files[0];
+  return file;
+}
+
+export { joinNewUser, leaveUser, sendFile };

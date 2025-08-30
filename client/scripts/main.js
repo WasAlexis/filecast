@@ -2,11 +2,12 @@
 
 import ws from "./signaling.js";
 import ClientWebRTC from "./webrtc.js";
-import { joinNewUser, leaveUser } from "./ui.js";
+import { joinNewUser, leaveUser, sendFile } from "./ui.js";
 
 const clientRTC = new ClientWebRTC(ws);
-window.selectPeer = selectPeer;
+
 window.sendmsg = clientRTC.sendMessage;
+
 
 ws.addEventListener('message', async (e) => {
   if (typeof e.data !== 'string') {
@@ -52,3 +53,12 @@ function selectPeer(id) {
   clientRTC.targetId = id;
   clientRTC.sendOffer();
 }
+
+window.selectPeer = selectPeer;
+
+function sendToPeer() {
+  const file = sendFile();
+  clientRTC.sendFile(file);
+}
+
+window.sendToPeer = sendToPeer;

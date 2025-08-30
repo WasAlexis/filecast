@@ -1,5 +1,7 @@
 /* setup webrtc config */
 
+import FileTransfer from "./transfer.js";
+
 class ClientWebRTC {
     constructor(ws) {
         this.myClientId = '';
@@ -7,6 +9,11 @@ class ClientWebRTC {
         this.dataChannel = null;
         this.ws = ws;
         this.targetId = '';
+        this.fileTransfer = null;
+    }
+
+    fileTransferHandle() {
+        this.fileTransfer = new FileTransfer(this.dataChannel);
     }
 
     onCandidate() {
@@ -22,6 +29,7 @@ class ClientWebRTC {
 
         this.dataChannel.onopen = () => {
             console.log('Datachannel is open');
+            this.fileTransferHandle();
         };
 
         this.dataChannel.onmessage = (e) => {
@@ -36,6 +44,7 @@ class ClientWebRTC {
 
             this.dataChannel.onopen = (e) => {
                 console.log('Datachannel remote is open');
+                this.fileTransferHandle();
             };
 
             this.dataChannel.onmessage = (e) => {
@@ -69,6 +78,14 @@ class ClientWebRTC {
             this.dataChannel.send(JSON.stringify({ type: 'message', message: msg }));
         } else {
             console.error("There is no connection yet");
+        }
+    }
+
+    sendFile(file) {
+        if (this.fileTransfer && this.dataChannel.readyState === "open") {
+            this.fileTransfer.sendFile(file);
+        } else {
+            console.error("File wasn't send");
         }
     }
 }
