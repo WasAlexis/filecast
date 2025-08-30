@@ -31,7 +31,10 @@ class FileTransfer {
             reader.readAsArrayBuffer(slice);
         };
 
-        reader.onload = (e) => {
+        reader.onload = async (e) => {
+            while (this.dataChannel.bufferedAmount > 4 * 1024 * 1024) {
+                await new Promise(res => { setTimeout(res, 50); });
+            }
             this.dataChannel.send(e.target.result);
             offset += e.target.result.byteLength;
 
