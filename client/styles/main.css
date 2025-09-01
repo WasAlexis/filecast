@@ -8,8 +8,10 @@
 
 .app .box {
     margin: 0 auto;
-    width: 75%;
-    height: 75%;
+    width: 100%;
+    max-width: 1366px;
+    height: 100%;
+    max-height: 768px;
     border: 2px solid var(--glass-border-color);
     border-radius: calc(1vw + 1vh);
 }
@@ -24,10 +26,14 @@
     border-bottom: 2px solid var(--glass-border-color);
 }
 
+.app .box .profile .information {
+    width: 50%;
+}
+
 .app .box .profile .information span {
     display: block;
     font-weight: 600;
-    font-size: calc(0.5vw + 1vh);
+    font-size: calc(0.1vw + 2vh);
     color: var(--gray-color);
 }
 
@@ -42,9 +48,9 @@
 }
 
 .app .box .profile .tools button, .app .box .profile .tools label {
-    margin-left: 1vw;
+    margin-left: 0.25vw;
     width: 5vw;
-    height: 60%;
+    height: 70%;
     background-repeat: no-repeat;
     background-position: center;
     background-size: calc(1vw + 1vh);

@@ -14,7 +14,7 @@
 
 body {
     width: 100vw;
-    height: 100vh;
+    height: 100dvh;
     background-color: var(--darker-color);
 }
 
@@ -24,8 +24,10 @@ h1, h2, h3, span, input[type="text"] {
 }
 
 input[type="text"] {
+    width: 100%;
+    max-width: 400px;
     font-weight: bold;
-    font-size: calc(0.5vw + 2vh);
+    font-size: calc(0.15vw + 3vh);
     background-color: transparent;
     border: none;
     outline: none;
