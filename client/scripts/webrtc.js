@@ -28,6 +28,7 @@ class ClientWebRTC {
 
     createConnection() {
         this.dataChannel = this.peerConnection.createDataChannel('FileCast');
+        this.dataChannel.binaryType = "arraybuffer";
 
         this.dataChannel.onopen = () => {
             console.log('Datachannel is open');
@@ -43,6 +44,7 @@ class ClientWebRTC {
     joinToConnection() {
         this.peerConnection.ondatachannel = (e) => {
             this.dataChannel = e.channel;
+            this.dataChannel.binaryType = "arraybuffer";
 
             this.dataChannel.onopen = (e) => {
                 console.log('Datachannel remote is open');
