@@ -1,31 +1,70 @@
 # FileCast
 
-Es una aplicación web para transferir archivos de forma simple y rápida, con la experiencia de AirDrop pero en versión multiplataforma.
+FileCast es una solución a un problema que todos en algún momento nos hemos enfrentado: **transferir archivos de manera rápida y sin cables**, manteniendo el archivo **original**, sin pérdidas de datos ni añadidos innecesarios.
 
-## Características principales
+Con FileCast puedes enviar archivos entre dispositivos usando solo la red local, de manera **eficiente, segura y confiable**, inspirado en la experiencia de AirDrop pero totalmente web.
 
-- **Transferencia directa**: los archivos viajan de un dispositivo a otro usando **WebRTC**.
-- **Descubrimiento automático**: si varios usuarios tienen FileCast abierto en la misma red, aparecerán en una lista de “dispositivos disponibles”.
-- **Privado y seguro**: los archivos no se almacenan en ningún servidor.
-- **Sin instalaciones**: solo necesitas abrir la página web.
+## Funcionalidades
+
+* Transferencia de archivos rápida y directa en la red local.
+* Mantiene la integridad del archivo original.
+* Perfil de usuario para identificarse durante la transferencia.
+* Soporte para múltiples dispositivos en la misma sesión.
+* Basado en tecnologías web estándar (WebRTC, WebSockets).
 
 ## Tecnologías
 
-- **Frontend**
-  - HTML + CSS + JavaScript.
+* **Frontend:** HTML, CSS, JavaScript, React (opcional según versión).
+* **Backend:** Node.js + Express + WebSocket.
+* **Transferencia de archivos:** WebRTC DataChannels.
 
-- **Backend**
-  - Node.js.
-  - WebSocket (para señalización y descubrimiento de usuarios en la red).
+## Instalación y ejecución local
 
-- **Comunicación P2P**
-  - WebRTC (DataChannel para enviar archivos de forma directa).
+1. **Clona el repositorio:**
+
+```bash
+git clone https://github.com/WasAlexis/filecast.git
+cd filecast
+```
+
+2. **Instala dependencias:**
+
+```bash
+npm install
+```
+
+3. **Ejecuta el servidor:**
+
+```bash
+npm run start
+```
+
+4. **Abre la aplicación en tu navegador:**
+
+Ve a `http://{ip}:3000` y empieza a transferir archivos.
+Por defecto usa el puerto 3000 pero si deseas cambiarlo puedes crear un archivo `.env` en la ruta filecast/server, y en su contenido agregas esto:
+```
+port= (indica aqui el puerto que deseas usar)
+```
 
 
-## Flujo de uso
+## Despliegue
 
-1. El **emisor** abre FileCast y selecciona un archivo.
-2. Los dispositivos que tengan FileCast abierto en la misma red aparecen en una lista.
-3. El emisor selecciona el dispositivo de destino.
-4. Se establece un canal **P2P con WebRTC**.
-5. El archivo se transfiere directamente al receptor.
+Si quieres hacer que FileCast esté disponible en tu red local o públicamente:
+
+1. Configura tu servidor en la nube o máquina local con Node.js.
+2. Abre el puerto necesario para WebSockets y WebRTC.
+3. Sube los archivos del proyecto y ejecuta el servidor como en la sección anterior.
+4. Accede desde cualquier dispositivo conectado a la misma red (o vía internet si el servidor es público) usando la URL de tu servidor.
+
+> ⚠️ Para WebRTC en internet se recomienda usar HTTPS para evitar problemas de seguridad y compatibilidad en algunos navegadores.
+
+## Cómo contribuir
+
+Si quieres aportar a FileCast:
+
+* Revisa los **issues** abiertos o crea uno nuevo con ideas o mejoras.
+* Haz un **fork** del repositorio, agrega tus cambios y abre un **pull request**.
+* Comparte tus sugerencias de optimización en la sección de **Discusiones**.
+
+**Nota:** Hay un documento que se llama Roadmap.md que contiene una lista de ideas pendiente por desarrollar, si deseas tomar unas de esas tareas, eres bienvenido.
