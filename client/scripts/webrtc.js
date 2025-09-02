@@ -5,7 +5,9 @@ import FileTransfer from "./transfer.js";
 class ClientWebRTC {
     constructor(ws) {
         this.myClientId = '';
-        this.peerConnection = new RTCPeerConnection();
+        this.peerConnection = new RTCPeerConnection({
+            iceServers: [{urls: "stun:stun.l.google.com:19302"}]
+        });
         this.dataChannel = null;
         this.ws = ws;
         this.targetId = '';
