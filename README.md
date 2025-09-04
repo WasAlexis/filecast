@@ -14,7 +14,7 @@ Con FileCast puedes enviar archivos entre dispositivos usando solo la red local,
 
 ## Tecnologías
 
-* **Frontend:** HTML, CSS, JavaScript, React (opcional según versión).
+* **Frontend:** HTML, CSS, JavaScript.
 * **Backend:** Node.js + Express + WebSocket.
 * **Transferencia de archivos:** WebRTC DataChannels.
 
@@ -26,6 +26,8 @@ Con FileCast puedes enviar archivos entre dispositivos usando solo la red local,
 git clone https://github.com/WasAlexis/filecast.git
 cd filecast
 ```
+
+Creamos un archivo en la ruta filecast/server llamado ".env", en su contenido debe tener un "port=" al puerto de tu computador que deseas usar.
 
 2. **Instala dependencias:**
 
@@ -42,7 +44,7 @@ npm run start
 4. **Abre la aplicación en tu navegador:**
 
 Ve a `http://{ip}:3000` y empieza a transferir archivos.
-Por defecto usa el puerto 3000 pero si deseas cambiarlo puedes crear un archivo `.env` en la ruta filecast/server, y en su contenido agregas esto:
+Puedes cambiar el puerto desde el archivo .env si asi lo deseas por defecto usa el 3000.
 ```
 port= (indica aqui el puerto que deseas usar)
 ```
