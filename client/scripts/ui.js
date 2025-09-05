@@ -1,29 +1,22 @@
 /* Javascript to manage user interface */
 
-const userList = document.getElementById('deviceList');
-const file = document.getElementById('inputFile').files[0];
+const deviceList = document.getElementById('deviceList');
 
-function joinNewUser(id) {
-  const newUser = document.createElement('div');
-  newUser.id = id;
-  newUser.innerHTML = `
-    <div class="device" onclick="selectPeer('${id}')">
+function renderDevicesOnScreen(devicesOnline, myId) {
+  deviceList.innerHTML = ''; // detele all nodes
+  devicesOnline.map((aux) => {
+    if (aux.deviceId != myId) {
+      const device = document.createElement('div');
+      device.id = aux.deviceId;
+      device.innerHTML = `
+      <div class="device" onclick="selectPeer('${aux.deviceId}')">
         <img src="./assets/svg/broadcast.svg" alt="device icon">
-            <span>Unknown</span>
-            <span>ID: ${id}</span>
-    </div>`;
-  userList.appendChild(newUser);
-  console.log(`${id} has joined the room`);
-}
-
-function leaveUser(id) {
-  const user = document.getElementById(id);
-  if (user) {
-    user.remove();
-    console.log(`${id} has left the room`);
-  } else {
-    console.error(`User with id ${id} not found`);
-  }
+            <span>${aux.deviceName}</span>
+            <span>ID: ${aux.deviceId}</span>
+      </div>`;
+      deviceList.appendChild(device);
+    }
+  });
 }
 
 function sendFile() {
@@ -31,4 +24,9 @@ function sendFile() {
   return file;
 }
 
-export { joinNewUser, leaveUser, sendFile };
+function getDeviceName() {
+  const myName = document.getElementById('devicename').value;
+  return myName;
+}
+
+export { renderDevicesOnScreen, sendFile, getDeviceName };

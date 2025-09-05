@@ -37,7 +37,7 @@ const server = http.createServer((req, res) => {
 });
 
 const wss = new WebSocketServer({ server });
-const clients = new Map();
+const devices = new Map();
 
 function broadcast (data, sender) {
     wss.clients.forEach((client) => {
@@ -47,25 +47,44 @@ function broadcast (data, sender) {
     });
 }
 
+function syncDevices() {
+    const deviceList = [];
+    for (let device of devices.values()) {
+        deviceList.push(device);
+    }
+    broadcast({ type: 'updateDeviceList', devicesOnline: deviceList }, undefined);
+}
+
 wss.on('connection', (socket) => {
     console.log('New client connected');
-    const clientId = uuidv4();
-    clients.set(clientId, socket);
+    // ToDo: Create a Class
+    const device = {
+        deviceId: uuidv4(),
+        deviceName: 'Unknown',
+        socket: socket
+    };
+    devices.set(device.deviceId, device);
 
-    socket.send(JSON.stringify({ type: 'id', id: clientId }));
-    broadcast({ type: 'join', id: clientId }, socket);
+    socket.send(JSON.stringify({ type: 'id', id: device.deviceId }));
+    syncDevices();
 
     socket.on('message', (message) => {
         const msg = JSON.parse(message);
-        if (msg.target && clients.has(msg.target)) {
-            clients.get(msg.target).send(JSON.stringify({ ...msg, from: clientId }));
+        if (msg.target && devices.has(msg.target)) {
+            const targetClient = devices.get(msg.target);
+            targetClient.socket.send(JSON.stringify({ ...msg, from: device.deviceId }));
+        }
+
+        if (msg.type == 'rename') {
+            devices.get(msg.id).deviceName = msg.newName;
+            syncDevices();
         }
     });
 
     socket.on('close', () => {
         console.log('Client disconnected');
-        clients.delete(clientId);
-        broadcast({ type: 'leave', id: clientId }, socket);
+        devices.delete(device.deviceId);
+        syncDevices();
     });
 });
 

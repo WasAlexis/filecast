@@ -2,7 +2,7 @@
 
 import ws from "./signaling.js";
 import ClientWebRTC from "./webrtc.js";
-import { joinNewUser, leaveUser, sendFile } from "./ui.js";
+import { renderDevicesOnScreen, sendFile, getDeviceName } from "./ui.js";
 
 const clientRTC = new ClientWebRTC(ws);
 
@@ -26,13 +26,9 @@ ws.addEventListener('message', async (e) => {
     case 'message':
       console.log('Received message: ' + msg);
       break;
-    case 'join':
-      joinNewUser(msg.id);
-      console.log('New user: ' + msg.id);
-      break;
-    case 'leave':
-      leaveUser(msg.id);
-      console.log('An user left ' + msg.id);
+    case 'updateDeviceList':
+      renderDevicesOnScreen(msg.devicesOnline, clientRTC.myClientId);
+      console.log('MemberList has been update');
       break;
     case 'offer':
       console.log('Received offer ' + msg.from);
@@ -62,3 +58,9 @@ function sendToPeer() {
 }
 
 window.sendToPeer = sendToPeer;
+
+function changeMyName() {
+  ws.send(JSON.stringify({ type: 'rename', newName: getDeviceName(), id: clientRTC.myClientId }));
+}
+
+window.changeMyName = changeMyName;
