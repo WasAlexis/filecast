@@ -19,7 +19,7 @@ function setupWebSocketServer(wss) {
         for (let device of devices.values()) {
             deviceList.push(device);
         }
-        broadcast({ type: 'updateDeviceList', devicesOnline: deviceList }, undefined);
+        broadcast({ signal: 'updateDeviceList', devicesOnline: deviceList }, undefined);
     }
 
     wss.on('connection', (socket) => {
@@ -27,7 +27,7 @@ function setupWebSocketServer(wss) {
         const device = new Device(uuidv4(), 'Unknown', socket);
         devices.set(device.deviceId, device);
 
-        socket.send(JSON.stringify({ type: 'id', id: device.deviceId }));
+        socket.send(JSON.stringify({ signal: 'assignId', id: device.deviceId }));
         syncDevices();
 
         socket.on('message', (message) => {
@@ -37,7 +37,7 @@ function setupWebSocketServer(wss) {
                 targetClient.socket.send(JSON.stringify({ ...msg, from: device.deviceId }));
             }
 
-            if (msg.type == 'rename') {
+            if (msg.signal == 'rename') {
                 devices.get(msg.id).deviceName = msg.newName;
                 syncDevices();
             }

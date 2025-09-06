@@ -18,8 +18,8 @@ ws.addEventListener('message', async (e) => {
   /* always received a JSON to select a case */
   const msg = JSON.parse(e.data);
 
-  switch (msg.type) {
-    case 'id':
+  switch (msg.signal) {
+    case 'assignId':
       clientRTC.myClientId = msg.id;
       console.log(clientRTC.myClientId);
       break;
@@ -60,7 +60,7 @@ function sendToPeer() {
 window.sendToPeer = sendToPeer;
 
 function changeMyName() {
-  ws.send(JSON.stringify({ type: 'rename', newName: getDeviceName(), id: clientRTC.myClientId }));
+  ws.send(JSON.stringify({ signal: 'rename', newName: getDeviceName(), id: clientRTC.myClientId }));
 }
 
 window.changeMyName = changeMyName;
