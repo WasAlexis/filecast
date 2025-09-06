@@ -24,6 +24,12 @@ Este proyecto aún está en una etapa temprana de desarrollo. A continuación se
 
 - [ ] **Indicar cuando los dispositivos estan conectados entre si**
   Mostrar de forma intuitiva cuando el usuario esta conectado a un dispositivo y tambien se entienda a cual estas conectado.
+
+- [ ] **Agregar efectos de sonidos**
+  Para mejorar la experiencia de usuario, hacer que los eventos y acciones tengan repercusion auditiva.
+
+- [ ] **Compatibilidad con el aspecto seleccionado del dispositivo**
+  Si el sistema operativo del usuario tiene el aspecto Claro, el sitio web debe de mostrarse en modo claro, de lo contrario modo oscuro.
   
 De momento esta es la lista de cosas que tengo en mente, tambien puedes aportar ideas de que otras cosas serian geniales agregar.
 
