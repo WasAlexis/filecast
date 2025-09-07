@@ -48,14 +48,11 @@
 }
 
 .app .box .profile .tools button, .app .box .profile .tools label {
-    margin-left: 0.25vw;
     width: 5vw;
     height: 70%;
     background-repeat: no-repeat;
     background-position: center;
-    background-size: calc(1vw + 1vh);
-    border: 1px solid var(--gray-color);
-    border-radius: 8px;
+    background-size: calc(1vw + 1.5vh);
     cursor: pointer;
 }
 
@@ -67,6 +64,13 @@
 .tools button {
     background-image: url('../assets/svg/cursor-fill.svg');
     background-color: transparent;
+    border: none;
+}
+
+.tools .divider {
+    width: 2px;
+    height: 50%;
+    background-color: var(--glass-border-color);
 }
 
 .app .box .device-list {
