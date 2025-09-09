@@ -30,6 +30,12 @@ Este proyecto aún está en una etapa temprana de desarrollo. A continuación se
 
 - [ ] **Compatibilidad con el aspecto seleccionado del dispositivo**
   Si el sistema operativo del usuario tiene el aspecto Claro, el sitio web debe de mostrarse en modo claro, de lo contrario modo oscuro.
+
+- [ ] **Envio de multiples archivos**
+  Hacer que el input:File permita enviar mas de un archivo a la vez.
+
+- [ ] **Opcion de envio a multiples dispositivos a la vez**
+  Permitir que el usuario pueda seleccionar varios dispositivos y enviarles los mismos archivos sin tener que hacerlo manualemente uno a uno.
   
 De momento esta es la lista de cosas que tengo en mente, tambien puedes aportar ideas de que otras cosas serian geniales agregar.
 
@@ -38,8 +44,7 @@ De momento esta es la lista de cosas que tengo en mente, tambien puedes aportar 
 1. Haz un fork del repositorio y clónalo localmente.  
 2. Crea una nueva rama para tu funcionalidad/arreglo:  
    ```bash
-   git branch feature/nombre-de-tu-feature
-   git switch feature/nombre-de-tu-feature
+   git switch -c feature/nombre-de-tu-feature
    ```
 3. Manten tus commits claros y en ingles.
 4. Sube tus cambios y envia un pull request.
