@@ -1,72 +1,76 @@
 # FileCast
 
-FileCast es una solución a un problema que todos en algún momento nos hemos enfrentado: **transferir archivos de manera rápida y sin cables**, manteniendo el archivo **original**, sin pérdidas de datos ni añadidos innecesarios.
+Este proyecto es una solucion a una situacion que todos hemos pasado: **Transferir archivos inalambricamente entre dispositivos con distintos sistemas operativos**.
 
-Con FileCast puedes enviar archivos entre dispositivos usando solo la red local, de manera **eficiente, segura y confiable**, inspirado en la experiencia de AirDrop pero totalmente web.
+## Que es FileCast?
+Es una herramienta que busca facilitar la transmision de archivos inalambricamente sin tener que usar algunos servicios de internet.
+> Alguna vez has querido pasar unas fotos, videos, documentos, etc de tu PC (Linux, Windows) a tu iPhone o Android?
 
-## Funcionalidades
+Supongo que si y para solucionarlo lo envias por **Whatsapp** o **Telegram**, o incluso subiendolo a la nube con tu proveedor de preferencia.
+Eso funciona pero, no es la forma mas optima, en algunos casos te reduce la calidad del archivo al trata de comprimirlo, se pierden datos o incluso en ciertos casos
+le agregan meta datos agregandole mas bytes de informacion al archivo.
 
-* Transferencia de archivos rápida y directa en la red local.
-* Mantiene la integridad del archivo original.
-* Perfil de usuario para identificarse durante la transferencia.
-* Soporte para múltiples dispositivos en la misma sesión.
-* Basado en tecnologías web estándar (WebRTC, WebSockets).
+## Cuales ventajas me ofrece FileCast?
+Trae muchisimas ventajas a comparacion de otras alternativas mencionadas anteriormente como **Redes Sociales** o **Cloud**.
+- **Privacidad:** Los archivos solo pasan de un dispositivo a otro sin pasar por servidores ni ningun otro dispositivo intermediario.
+- **Velocidad:** Como se utiliza en la red local la potencia de transferencia la determina el **Modem** los proveedores de internet por lo general
+  ofrecen planes de internet dentre 10Mb y 100Mb, **Filecast** no usa la velocidad de tu proveedor, usa el WiFi (No es lo mismo que internet) que suele rondar entre los 500Mbps y los 2Gbps.
 
-## Tecnologías
+| Estándar              | Año aprox. | Velocidad máx. teórica | Velocidad real típica       |
+| --------------------- | ---------- | ---------------------- | --------------------------- |
+| **WiFi 1 (802.11b)**  | 1999       | 11 Mbps                | 4–6 Mbps                    |
+| **WiFi 2 (802.11a)**  | 1999       | 54 Mbps                | 20–30 Mbps                  |
+| **WiFi 3 (802.11g)**  | 2003       | 54 Mbps                | 20–30 Mbps                  |
+| **WiFi 4 (802.11n)**  | 2009       | 600 Mbps               | 100–300 Mbps                |
+| **WiFi 5 (802.11ac)** | 2014       | 3.5 Gbps (en MU-MIMO)  | 500 Mbps – 1 Gbps           |
+| **WiFi 6 (802.11ax)** | 2019       | 9.6 Gbps               | 1–3 Gbps                    |
+| **WiFi 6E**           | 2021       | 9.6 Gbps (en 6 GHz)    | 1–3 Gbps                    |
+| **WiFi 7 (802.11be)** | 2024       | 46 Gbps (teórico)      | aún en pruebas, varios Gbps |
 
-* **Frontend:** HTML, CSS, JavaScript.
-* **Backend:** Node.js + Express + WebSocket.
-* **Transferencia de archivos:** WebRTC DataChannels.
+- **Transferencia original sin perdidas ni agregados:** El archivo transferido se pasa sin modificacion alguna, conservando cada **bit** de informacion.
+- **Multiplataforma:** No importa que dispositivos uses, si puede abrir un navegador moderno, podras usar esta herramienta.
 
-## Instalación y ejecución local
+## Tecnologias utilizadas:
+Este proyecto esta ccnstruido con herramientas nativas de la plataforma Web, buscando la eficiencia y el maximo control de los procesos.
 
-1. **Clona el repositorio:**
+- **Frontend:** HTML + CSS + Javascript.
+- **Backend:** Node + Web Sockets + WebRTC.
 
+## Quiero utilizarlo:
+De momento no se ha hecho deploy en una pagina web accesible, ya que el proyecto aun esta en una fase temprana de desarrollo. Pero puedes ejecutarlo localmente para usarlo por tu cuenta.
+
+Primero debes de descargar el proyecto:
 ```bash
 git clone https://github.com/WasAlexis/filecast.git
-cd filecast
+cd filecast/server
 ```
 
-Creamos un archivo en la ruta filecast/server llamado ".env", en su contenido debe tener un "port=" al puerto de tu computador que deseas usar.
+Instala las dependencia de node: (Son solo 2: ws y v4)
 
-2. **Instala dependencias:**
-
+**Nota:** Importante estar en la ruta `filecast/server`.
 ```bash
 npm install
 ```
 
-3. **Ejecuta el servidor:**
+Crear el archivo de variables de entorno:
+Esto nos ayudara a poder configurar algunas cosas a nuestro gusto.
+```bash
+touch .env
+```
 
+En su contenido puedes agregar la variable: `PORT=#`. Reemplaza el # por el puerto que deseas usar. (Por defecto usa el puerto 3000)
+
+Por ultimo lo ejecutaremos para poder acceder a el desde el navegador:
 ```bash
 npm run start
 ```
+Ahora en tu red local esta sirviendo una pagina web en la ruta `http://` la ip del equipo donde esta ejecutandose el proyecto`:` el puerto que elegiste.
 
-4. **Abre la aplicación en tu navegador:**
+**Nota:** Cualquier equipo que se encuentre en la misma red donde este conectado este equipo podra acceder al sitio web.
 
-Ve a `http://{ip}:3000` y empieza a transferir archivos.
-Puedes cambiar el puerto desde el archivo .env si asi lo deseas por defecto usa el 3000.
-```
-port= (indica aqui el puerto que deseas usar)
-```
+## Contribucion
+Este proyecto es completamente **open-source** puedes tanto usar la herramienta de forma gratuita, contribuir enviando Pull-request o creando un fork para hacer los cambios que a ti te guste.
 
+Si deseas obtener la documentacion de como esta construido, filosofia y objetivos, estoy construyendo un sitio web que contendra toda esa informacion.
 
-## Despliegue
-
-Si quieres hacer que FileCast esté disponible en tu red local o públicamente:
-
-1. Configura tu servidor en la nube o máquina local con Node.js.
-2. Abre el puerto necesario para WebSockets y WebRTC.
-3. Sube los archivos del proyecto y ejecuta el servidor como en la sección anterior.
-4. Accede desde cualquier dispositivo conectado a la misma red (o vía internet si el servidor es público) usando la URL de tu servidor.
-
-> ⚠️ Para WebRTC en internet se recomienda usar HTTPS para evitar problemas de seguridad y compatibilidad en algunos navegadores.
-
-## Cómo contribuir
-
-Si quieres aportar a FileCast:
-
-* Revisa los **issues** abiertos o crea uno nuevo con ideas o mejoras.
-* Haz un **fork** del repositorio, agrega tus cambios y abre un **pull request**.
-* Comparte tus sugerencias de optimización en la sección de **Discusiones**.
-
-**Nota:** Hay un documento que se llama Roadmap.md que contiene una lista de ideas pendiente por desarrollar, si deseas tomar unas de esas tareas, eres bienvenido.
+Link del sitio: [Documentacion Filecast](https://alexisdevice.notion.site/FileCast-26977c7af47e80ebb0c6c363d9a12596) (Beta)
