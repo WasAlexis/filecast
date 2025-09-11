@@ -21,7 +21,7 @@ class ClientWebRTC {
     onCandidate() {
         this.peerConnection.onicecandidate = (e) => {
             if (e.candidate) {
-                this.ws.send(JSON.stringify({ type: 'ice', target: this.targetId, candidate: e.candidate }));
+                this.ws.send(JSON.stringify({ signal: 'ice', target: this.targetId, candidate: e.candidate }));
             }
         };
     }
@@ -62,7 +62,7 @@ class ClientWebRTC {
         const offer = await this.peerConnection.createOffer();
         await this.peerConnection.setLocalDescription(offer);
         this.onCandidate();
-        this.ws.send(JSON.stringify({ type: 'offer', target: this.targetId, offer }));
+        this.ws.send(JSON.stringify({ signal: 'offer', target: this.targetId, offer }));
         console.log('Send offer to ' + this.targetId);
     }
 
@@ -73,7 +73,7 @@ class ClientWebRTC {
         this.onCandidate();
         const answer = await this.peerConnection.createAnswer();
         await this.peerConnection.setLocalDescription(answer);
-        this.ws.send(JSON.stringify({ type: 'answer', target: message.from, answer }));
+        this.ws.send(JSON.stringify({ signal: 'answer', target: message.from, answer }));
         console.log('Send answer to ' + message.from);
     }
 
