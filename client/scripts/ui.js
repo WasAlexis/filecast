@@ -8,12 +8,12 @@ function renderDevicesOnScreen(devicesOnline, myId) {
     if (aux.deviceId != myId) {
       const device = document.createElement('div');
       device.id = aux.deviceId;
+      device.className = 'device';
+      device.setAttribute("onclick", `selectPeer('${aux.deviceId}')`);
       device.innerHTML = `
-      <div class="device" onclick="selectPeer('${aux.deviceId}')">
         <img src="./assets/svg/broadcast.svg" alt="device icon">
-            <span>${aux.deviceName}</span>
-            <span>ID: ${aux.deviceId}</span>
-      </div>`;
+        <span>${aux.deviceName}</span>
+      `;
       deviceList.appendChild(device);
     }
   });
