@@ -1,52 +1,48 @@
 /* Handler for Web Sockets */
-
-import Device from '../entities/Device.js';
-import { v4 as uuidv4 } from 'uuid';
+import DeviceHub from '../services/DeviceHub.js';
+import { syncDevices } from '../utils/wsUtils.js';
 
 function setupWebSocketServer(wss) {
-    const devices = new Map();
-
-    const broadcast = (data, sender) => {
-        wss.clients.forEach((client) => {
-            if (client.readyState === client.OPEN && client !== sender) {
-                client.send(JSON.stringify(data));
-            }
-        });
-    };
-
-    const syncDevices = () => {
-        const deviceList = [];
-        for (let device of devices.values()) {
-            deviceList.push(device);
-        }
-        broadcast({ signal: 'updateDeviceList', devicesOnline: deviceList }, undefined);
-    }
+    const deviceHub = new DeviceHub();
 
     wss.on('connection', (socket) => {
         console.log('New client connected');
-        const device = new Device(uuidv4(), 'Unknown', socket);
-        devices.set(device.deviceId, device);
+        const device = deviceHub.addDevice(socket);
 
         socket.send(JSON.stringify({ signal: 'assignId', id: device.deviceId }));
-        syncDevices();
+        syncDevices(wss, deviceHub);
 
         socket.on('message', (message) => {
             const msg = JSON.parse(message);
-            if (msg.target && devices.has(msg.target)) {
-                const targetClient = devices.get(msg.target);
-                targetClient.socket.send(JSON.stringify({ ...msg, from: device.deviceId }));
-            }
 
-            if (msg.signal == 'rename') {
-                devices.get(msg.id).deviceName = msg.newName;
-                syncDevices();
+            switch (msg.signal) {
+                case 'rename':
+                    deviceHub.renameDevice(msg.id, msg.newName);
+                    syncDevices(wss, deviceHub);
+                    break;
+                case 'offer':
+                case 'answer':
+                case 'ice':
+                    if (msg.target) {
+                        const target = deviceHub.getDevice(msg.target);
+                        target.socket.send(JSON.stringify(
+                            {
+                                ...msg,
+                                from: device.deviceId
+                            }
+                        ));
+                    }
+                    break;
+                default:
+                    console.log('Invalid signal type');
+                    break;
             }
         });
 
         socket.on('close', () => {
             console.log('Client disconnected');
-            devices.delete(device.deviceId);
-            syncDevices();
+            deviceHub.removeDevice(device.deviceId);
+            syncDevices(wss, deviceHub);
         });
     });
 }
