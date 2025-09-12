@@ -34,11 +34,6 @@ class ClientWebRTC {
             console.log('Datachannel is open');
             this.fileTransferHandle();
         };
-
-        this.dataChannel.onmessage = (e) => {
-            const msg = e.data;
-            console.log('Received message: ' + msg);
-        };
     }
 
     joinToConnection() {
@@ -49,10 +44,6 @@ class ClientWebRTC {
             this.dataChannel.onopen = (e) => {
                 console.log('Datachannel remote is open');
                 this.fileTransferHandle();
-            };
-
-            this.dataChannel.onmessage = (e) => {
-                console.log('Message from peer remote: ' + e.data);
             };
         }
     }
@@ -75,14 +66,6 @@ class ClientWebRTC {
         await this.peerConnection.setLocalDescription(answer);
         this.ws.send(JSON.stringify({ signal: 'answer', target: message.from, answer }));
         console.log('Send answer to ' + message.from);
-    }
-
-    sendMessage(msg) {
-        if (this.dataChannel && this.dataChannel.readyState === 'open') {
-            this.dataChannel.send(JSON.stringify({ type: 'message', message: msg }));
-        } else {
-            console.error("There is no connection yet");
-        }
     }
 
     sendFile(file) {

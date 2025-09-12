@@ -6,8 +6,6 @@ import { renderDevicesOnScreen, sendFile, getDeviceName } from "./ui.js";
 
 const clientRTC = new ClientWebRTC(ws);
 
-window.sendmsg = clientRTC.sendMessage;
-
 
 ws.addEventListener('message', async (e) => {
   if (typeof e.data !== 'string') {
@@ -22,9 +20,6 @@ ws.addEventListener('message', async (e) => {
     case 'assignId':
       clientRTC.myClientId = msg.id;
       console.log(clientRTC.myClientId);
-      break;
-    case 'message':
-      console.log('Received message: ' + msg);
       break;
     case 'updateDeviceList':
       renderDevicesOnScreen(msg.devicesOnline, clientRTC.myClientId);
