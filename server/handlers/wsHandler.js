@@ -7,15 +7,17 @@ function setupWebSocketServer(wss) {
 
     wss.on('connection', (socket) => {
         console.log('New client connected');
-        const device = deviceHub.addDevice(socket);
-
-        socket.send(JSON.stringify({ signal: 'assignId', id: device.deviceId }));
-        syncDevices(wss, deviceHub);
+        let device;
 
         socket.on('message', (message) => {
             const msg = JSON.parse(message);
 
             switch (msg.signal) {
+                case 'device-join':
+                    device = deviceHub.addDevice(msg.deviceName, socket);
+                    socket.send(JSON.stringify({ signal: 'assignId', id: device.deviceId }));
+                    syncDevices(wss, deviceHub);
+                    break;
                 case 'rename':
                     deviceHub.renameDevice(msg.id, msg.newName);
                     syncDevices(wss, deviceHub);

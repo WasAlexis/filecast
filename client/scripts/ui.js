@@ -1,6 +1,7 @@
 /* Javascript to manage user interface */
 
 const deviceList = document.getElementById('deviceList');
+const myName = document.getElementById('devicename');
 
 function renderDevicesOnScreen(devicesOnline, myId) {
   deviceList.innerHTML = ''; // detele all nodes
@@ -25,8 +26,11 @@ function sendFile() {
 }
 
 function getDeviceName() {
-  const myName = document.getElementById('devicename').value;
-  return myName;
+  return myName.value;
 }
 
-export { renderDevicesOnScreen, sendFile, getDeviceName };
+function loadName(deviceName) {
+  myName.value = deviceName;
+}
+
+export { renderDevicesOnScreen, sendFile, getDeviceName, loadName };

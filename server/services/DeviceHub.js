@@ -8,8 +8,8 @@ class DeviceHub {
         this.devices = new Map();
     }
 
-    addDevice(socket) {
-        const device = new Device(uuidv4(), 'Unknown', socket);
+    addDevice(name, socket) {
+        const device = new Device(uuidv4(), name, socket);
         this.devices.set(device.deviceId, device);
         return device;
     }

@@ -55,7 +55,13 @@ function sendToPeer() {
 window.sendToPeer = sendToPeer;
 
 function changeMyName() {
-  ws.send(JSON.stringify({ signal: 'rename', newName: getDeviceName(), id: clientRTC.myClientId }));
+  if (getDeviceName() != '') {
+    const newName = getDeviceName();
+    ws.send(JSON.stringify({ signal: 'rename', newName, id: clientRTC.myClientId }));
+    window.localStorage.setItem('deviceName', newName);
+  } else {
+    window.localStorage.removeItem('deviceName');
+  }
 }
 
 window.changeMyName = changeMyName;
