@@ -28,4 +28,8 @@
         width: 15vw;
         background-size: calc(1vw + 2vh);
     }
+
+    .app .box .action-panel .device-list {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
 }

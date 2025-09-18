@@ -7,20 +7,23 @@
 }
 
 :root {
+    color-scheme: light dark;
     --darker-color: #201f1d;
-    --gray-color: #8a8a8a;
-    --glass-border-color: #363533;
+    --light-color: #ffffff;
+    --gray-dark-color: #8a8a8a;
+    --dark-glass-border-color: #363533;
+    --light-glass-border-color: #dddddd;
 }
 
 body {
     width: 100vw;
     height: 100dvh;
-    background-color: var(--darker-color);
+    background-color: light-dark(var(--light-color), var(--darker-color));
 }
 
 h1, h2, h3, span, input[type="text"] {
     font-family: sans-serif;
-    color: whitesmoke;
+    color: light-dark(var(--darker-color), var(--light-color));
 }
 
 input[type="text"] {
