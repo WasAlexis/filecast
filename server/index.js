@@ -3,9 +3,6 @@ import { WebSocketServer } from 'ws';
 import serverFile from './handlers/httpHandler.js';
 import setupWebSocketServer from './handlers/wsHandler.js';
 
-
-process.loadEnvFile('./.env');
-
 const port = process.env.PORT || 3000;
 
 const server = http.createServer(serverFile);
