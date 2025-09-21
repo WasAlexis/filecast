@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
-    "dev": "node --watch index.js"
+    "dev": "node --env-file .env --watch index.js"
   },
   "keywords": [],
   "author": "Alexis Melendez",
