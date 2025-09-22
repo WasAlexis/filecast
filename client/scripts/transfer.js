@@ -1,12 +1,11 @@
 /* transfer file logic */
 
-const chunkSize = 16 * 1024; // 16KB/package
-
 class FileTransfer {
     constructor(dataChannel) {
         this.dataChannel = dataChannel;
         this.receivedChunks = [];
         this.incomingFileMeta = null;
+        this.chunkSize = 256 * 1024; // 256KB
 
         this.dataChannel.onmessage = (e) => {
             this.handleMessage(e);
@@ -27,13 +26,13 @@ class FileTransfer {
         const reader = new FileReader();
 
         const readSlice = (o) => {
-            const slice = file.slice(o, o + chunkSize);
+            const slice = file.slice(o, o + this.chunkSize);
             reader.readAsArrayBuffer(slice);
         };
 
         reader.onload = async (e) => {
-            while (this.dataChannel.bufferedAmount > 4 * 1024 * 1024) {
-                await new Promise(res => { setTimeout(res, 50); });
+            while (this.dataChannel.bufferedAmount > 100 * 1024 * 1024) {
+                await new Promise(res => { setTimeout(res, 10); });
             }
             this.dataChannel.send(e.target.result);
             offset += e.target.result.byteLength;
