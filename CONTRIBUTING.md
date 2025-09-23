@@ -1,48 +1,13 @@
-# Filecast Roadmap & Guía de Contribución
+# Guia de contribucion
 
-Este proyecto aún está en una etapa temprana de desarrollo. A continuación se muestra una lista de características faltantes o planificadas en las que los contribuidores pueden ayudar.
+Gracias por interesarte en contribuir al proyecto, toda ayuda es bienvenida para crear la mejor version que nos guste a todos.
 
-## Funcionalidades Planeadas
+El apartado **Discussion** esta reservado exclusivamente para poder hacer post de **dudas**, aportar **ideas** o conversar sobre la direccion del proyecto.
 
-- [ ] **Notificación de presencia de usuarios**
-  Mostrar en la interfaz cuando un nuevo usuario entra o sale de la sala, esto puede mostrar un icono en el centro junto con algun nombre que lo identifique.
+El apartado **Issue** se utilizara solo para reportar errores.
 
-- [ ] **Autorizar desde el otro dispositivo la tranferencia**
-  Cuando se seleccione a un dispositivo, este debe de confirmar que quiere recibir el archivo.
-
-- [ ] **Progreso de transferencia de archivos**
-  Visualizar el porcentaje de subida/descarga para archivos grandes.
-
-- [x] **Transferencia de archivos en fragmentos (chunks)**
-  Implementar envío por partes para soportar archivos de gran tamaño de manera segura.
-
-- [ ] **Manejo de errores**
-  Mensajes claros para problemas de conexión, tipos de archivo no soportados o transferencias fallidas.
-
-- [ ] **Seguridad**
-  Agregar cifrado para la transferencia de archivos.
-
-- [ ] **Indicar cuando los dispositivos estan conectados entre si**
-  Mostrar de forma intuitiva cuando el usuario esta conectado a un dispositivo y tambien se entienda a cual estas conectado.
-
-- [ ] **Agregar efectos de sonidos**
-  Para mejorar la experiencia de usuario, hacer que los eventos y acciones tengan repercusion auditiva.
-
-- [ ] **Compatibilidad con el aspecto seleccionado del dispositivo**
-  Si el sistema operativo del usuario tiene el aspecto Claro, el sitio web debe de mostrarse en modo claro, de lo contrario modo oscuro.
-
-- [ ] **Envio de multiples archivos**
-  Hacer que el input:File permita enviar mas de un archivo a la vez.
-
-- [ ] **Opcion de envio a multiples dispositivos a la vez**
-  Permitir que el usuario pueda seleccionar varios dispositivos y enviarles los mismos archivos sin tener que hacerlo manualemente uno a uno.
-  
-De momento esta es la lista de cosas que tengo en mente, tambien puedes aportar ideas de que otras cosas serian geniales agregar.
-
-## Cómo Contribuir
-
-1. Haz un fork del repositorio y clónalo localmente.  
-2. Crea una nueva rama para tu funcionalidad/arreglo:  
+1. Haz un fork del repositorio y clónalo localmente.
+2. Crea una nueva rama para tu funcionalidad/arreglo:
    ```bash
    git switch -c feature/nombre-de-tu-feature
    ```
@@ -57,4 +22,4 @@ De momento esta es la lista de cosas que tengo en mente, tambien puedes aportar 
 
 Ya con eso lo reviso y lo implemento en el codigo.
 
-Gracias por leer y que la fuerza siempre este contigo.
+Gracias por leer y que la **fuerza** siempre este contigo.
