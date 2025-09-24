@@ -1,7 +1,7 @@
 /* start connection to server */
 
-import ws from "./signaling.js";
-import ClientWebRTC from "./webrtc.js";
+import ws from "./wsClient.js";
+import ClientWebRTC from "./ClientWebRTC.js";
 import { renderDevicesOnScreen, sendFile, getDeviceName } from "./ui.js";
 
 const clientRTC = new ClientWebRTC(ws);

@@ -1,6 +1,6 @@
 /* setup webrtc config */
 
-import FileTransfer from "./transfer.js";
+import FileTransfer from "./FileTransfer.js";
 
 class ClientWebRTC {
     constructor(ws) {

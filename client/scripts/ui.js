@@ -2,6 +2,7 @@
 
 const deviceList = document.getElementById('deviceList');
 const myName = document.getElementById('devicename');
+const progressBar = document.getElementById('progressBar');
 
 function renderDevicesOnScreen(devicesOnline, myId) {
   deviceList.innerHTML = ''; // detele all nodes
@@ -32,5 +33,18 @@ function getDeviceName() {
 function loadName(deviceName) {
   myName.value = deviceName;
 }
+
+async function aumentarProgreso() {
+  let progress = 0;
+  while (progress <= 100) {
+    progressBar.value = progress;
+    progress += 1;
+    await new Promise((res) => {
+      setTimeout(res, 1000);
+    });
+  }
+}
+
+window.aumentarProgreso = aumentarProgreso;
 
 export { renderDevicesOnScreen, sendFile, getDeviceName, loadName };
