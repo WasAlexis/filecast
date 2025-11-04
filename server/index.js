@@ -1,16 +1,51 @@
+/**
+ * FileCast Server
+ * Main server entry point
+ */
+
 import http from 'node:http';
 import { WebSocketServer } from 'ws';
-import serverFile from './handlers/httpHandler.js';
+import serveFile from './handlers/httpHandler.js';
 import setupWebSocketServer from './handlers/wsHandler.js';
+import config from './config/config.js';
+import { info } from './utils/logger.js';
 
-const port = process.env.PORT || 3000;
+const { port, host } = config.server;
 
-const server = http.createServer(serverFile);
+// Create HTTP server
+const server = http.createServer(serveFile);
 
-const wss = new WebSocketServer({ server });
+// Create WebSocket server
+const wss = new WebSocketServer({ 
+    server,
+    maxPayload: config.websocket.maxPayload
+});
 
+// Setup WebSocket handlers
 setupWebSocketServer(wss);
 
-server.listen(port, '0.0.0.0', () => {
-    console.log(`Server is running on http://localhost:${port}`);
+// Start server
+server.listen(port, host, () => {
+    info(`FileCast server running`, {
+        url: `http://localhost:${port}`,
+        environment: config.server.environment,
+        maxDevices: config.device.maxDevices
+    });
+});
+
+// Graceful shutdown
+process.on('SIGTERM', () => {
+    info('SIGTERM received, shutting down gracefully');
+    server.close(() => {
+        info('Server closed');
+        process.exit(0);
+    });
+});
+
+process.on('SIGINT', () => {
+    info('SIGINT received, shutting down gracefully');
+    server.close(() => {
+        info('Server closed');
+        process.exit(0);
+    });
 });

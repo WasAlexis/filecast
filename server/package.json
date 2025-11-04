@@ -1,19 +1,27 @@
 {
   "name": "filecast",
-  "version": "0.0.1 beta",
-  "description": "SPA for file sharing",
+  "version": "0.1.0",
+  "description": "Secure peer-to-peer file sharing via WebRTC",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
     "dev": "node --env-file .env --watch index.js"
   },
-  "keywords": [],
+  "keywords": [
+    "file-sharing",
+    "webrtc",
+    "p2p",
+    "websocket"
+  ],
   "author": "Alexis Melendez",
   "license": "ISC",
   "type": "module",
   "dependencies": {
     "uuid": "^11.1.0",
     "ws": "8.18.3"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   }
 }
