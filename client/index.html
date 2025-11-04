@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FileCast</title>
+    <meta name="description" content="FileCast - Comparte archivos de forma segura mediante WebRTC P2P">
+    <title>FileCast - Transferencia Segura de Archivos</title>
     <link rel="shortcut icon" href="/assets/svg/broadcast.svg" type="image/svg+xml">
     <link rel="stylesheet" href="/styles/static.css">
     <link rel="stylesheet" href="/styles/main.css">
@@ -11,24 +12,71 @@
 </head>
 <body>
     <div class="app">
+        <header class="app-header">
+            <div class="logo">
+                <img src="/assets/svg/broadcast.svg" alt="FileCast Logo">
+                <h1>FileCast</h1>
+            </div>
+            <div id="connectionStatus" class="connection-status">Conectando...</div>
+        </header>
+
         <div class="box">
             <div class="profile">
                 <div class="information">
-                    <span>Mostrarme como</span>
-                    <input type="text" id="devicename" autocomplete="off" placeholder="Unknown" onblur="changeMyName()">
+                    <label for="devicename">Mostrarme como</label>
+                    <input 
+                        type="text" 
+                        id="devicename" 
+                        autocomplete="off" 
+                        placeholder="Mi Dispositivo" 
+                        onblur="changeMyName()"
+                        maxlength="50"
+                    >
                 </div>
                 <div class="tools">
-                    <input type="file" id="inputFile">
-                    <label for="inputFile"></label>
+                    <input type="file" id="inputFile" accept="*/*">
+                    <label for="inputFile" class="file-label" title="Seleccionar archivo">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/>
+                            <polyline points="13 2 13 9 20 9"/>
+                        </svg>
+                    </label>
                     <div class="divider"></div>
-                    <button onclick="sendToPeer()"></button>
+                    <button onclick="sendToPeer()" class="send-button" title="Enviar archivo">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="22" y1="2" x2="11" y2="13"/>
+                            <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+                        </svg>
+                    </button>
                 </div>
             </div>
+
             <div class="action-panel">
-                <div class="device-list" id="deviceList"></div>
+                <h2>Dispositivos Disponibles</h2>
+                <div class="device-list" id="deviceList">
+                    <div class="loading">Cargando dispositivos...</div>
+                </div>
+            </div>
+
+            <div id="progressContainer" class="progress-container" style="display: none;">
+                <div class="progress-info">
+                    <span id="progressFileName" class="progress-filename"></span>
+                    <span id="progressText" class="progress-text">0%</span>
+                </div>
+                <progress id="progressBar" max="100" value="0"></progress>
             </div>
         </div>
+
+        <footer class="app-footer">
+            <p>
+                Transferencia segura P2P mediante WebRTC
+                <a href="https://github.com/WasAlexis/filecast" target="_blank" rel="noopener">GitHub</a>
+            </p>
+        </footer>
     </div>
+
+    <!-- Notification container will be added by JavaScript -->
+    
     <script src="/scripts/main.js" type="module"></script>
 </body>
 </html>
