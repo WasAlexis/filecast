@@ -14,6 +14,7 @@
     max-height: 768px;
     border: 2px solid light-dark(var(--light-glass-border-color), var(--dark-glass-border-color));
     border-radius: 12px;
+    overflow: hidden;
 }
 
 .app .box .profile {
@@ -74,6 +75,9 @@
 }
 
 .app .box .action-panel {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     width: 100%;
     height: 85%;
 }
@@ -84,7 +88,7 @@
     grid-auto-rows: calc(1vw + 15vh);
     justify-items: center;
     padding: calc(1vw + 1vh);
-    height: 100%;
+    height: 90%;
     overflow-y: auto;
 }
 

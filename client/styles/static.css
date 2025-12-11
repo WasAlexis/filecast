@@ -1,3 +1,6 @@
+/* imports */
+@import url("./notification.css");
+
 /* resets */
 
 * {
@@ -13,6 +16,7 @@
     --gray-dark-color: #8a8a8a;
     --dark-glass-border-color: #363533;
     --light-glass-border-color: #dddddd;
+    --blue-color: 33, 150, 243;
 }
 
 body {
@@ -21,7 +25,7 @@ body {
     background-color: light-dark(var(--light-color), var(--darker-color));
 }
 
-h1, h2, h3, span, input[type="text"] {
+h1, h2, h3, span, p, input[type="text"] {
     font-family: sans-serif;
     color: light-dark(var(--darker-color), var(--light-color));
 }
@@ -34,4 +38,22 @@ input[type="text"] {
     background-color: transparent;
     border: none;
     outline: none;
+}
+
+button {
+    padding: 8px 16px;
+    border: 2px solid light-dark(var(--light-glass-border-color), var(--dark-glass-border-color));
+    border-radius: 12px;
+    outline: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+button.fill {
+    background-color: rgba(var(--blue-color), 0.25);
+    border: 2px solid rgba(var(--blue-color), 0.40);
+}
+
+span.special {
+    color: rgb(var(--blue-color));
 }

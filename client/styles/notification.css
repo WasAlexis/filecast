@@ -1,0 +1,60 @@
+/* styles for notifications */
+
+.notification-bar {
+    width: 100%;
+    height: 10%;
+}
+
+.notification-bar > div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    padding: 1vh 2vw;
+}
+
+.notification-bar > div:not(.disappearing) {
+    animation: appear 0.5s ease-in-out;
+}
+
+.notification-bar > div.disappearing {
+    animation: disappear 0.5s ease-in-out forwards;
+}
+
+.notification-bar > div.request {
+    border-top: 2px solid light-dark(var(--light-glass-border-color), var(--dark-glass-border-color));
+    background-color: rgba(250, 250, 250, 0.05);
+}
+
+.notification-bar > div.request .options {
+    display: flex;
+    gap: 8px;
+}
+
+.notification-bar > div.request .options button {
+    font-size: 14px;
+}
+
+.notification-bar > div.log {
+    border-top: 2px solid rgba(var(--blue-color), 0.5);
+    background-color: rgba(var(--blue-color), 0.1);
+}
+
+@keyframes appear {
+    from {
+        transform: translateY(65px);
+    }
+    to {
+        transform: translateY(0);
+    }
+}
+
+@keyframes disappear {
+    from {
+        transform: translateY(0);
+    }
+    to {
+        transform: translateY(65px);
+    }
+}
