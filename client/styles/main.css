@@ -82,7 +82,7 @@
     height: 85%;
 }
 
-.app .box .action-panel .device-list {
+.app .box .action-panel #device-list {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     grid-auto-rows: calc(1vw + 15vh);
@@ -92,7 +92,7 @@
     overflow-y: auto;
 }
 
-.app .box .action-panel .device-list .device {
+.app .box .action-panel #device-list .device {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -102,17 +102,17 @@
     cursor: pointer;
 }
 
-.app .box .action-panel .device-list .device img {
+.app .box .action-panel #device-list .device img {
     margin-bottom: 1vh;
     width: 25%;
 }
 
-.device span {
+#device-list .device span {
     text-align: center;
     font-size: calc(0.5vw + 2vh);
     font-weight: 300;
 }
 
-.app .box .action-panel .device-list .device span.identifier {
+.app .box .action-panel #device-list .device span.identifier {
     color: var(--gray-color);
 }
