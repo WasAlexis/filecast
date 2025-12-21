@@ -9,12 +9,16 @@ function sendSocket(data) {
     ws.send(JSON.stringify(data));
 }
 
-ws.addEventListener('open', () => {
-    const deviceName = (window.localStorage.getItem('deviceName')) ? window.localStorage.getItem('deviceName') : 'Uknown';
-    if (deviceName != 'Uknown') {
+function initDeviceName() {
+    const deviceName = window.localStorage.getItem('deviceName');
+    if (deviceName !== null) {
         loadName(deviceName);
     }
     sendSocket({ signal: 'device-join', deviceName });
+}
+
+ws.addEventListener('open', () => {
+    initDeviceName();
     console.log('Connected to FileCast');
 });
 
