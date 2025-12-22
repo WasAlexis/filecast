@@ -1,8 +1,8 @@
 /* start connection to server */
 
-import ws from "./wsClient.js";
+import { ws } from "./wsClient.js";
 import ClientWebRTC from "./ClientWebRTC.js";
-import { renderDevicesOnScreen, sendFile, getDeviceName } from "./ui.js";
+import { showDevices, sendFile, getDeviceName } from "./ui-controller.js";
 
 const clientRTC = new ClientWebRTC(ws);
 
@@ -22,7 +22,7 @@ ws.addEventListener('message', async (e) => {
       console.log(clientRTC.myClientId);
       break;
     case 'updateDeviceList':
-      renderDevicesOnScreen(msg.devicesOnline, clientRTC.myClientId);
+      showDevices(msg.devicesOnline, clientRTC.myClientId);
       console.log('MemberList has been update');
       break;
     case 'offer':

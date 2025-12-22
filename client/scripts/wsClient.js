@@ -1,6 +1,6 @@
 /* start WebSocket connection */
 
-import { loadName } from "./ui.js";
+import { loadName } from "./ui-controller.js";
 
 const protocol = (window.location.protocol === 'https:') ? 'wss' : 'ws';
 const ws = new WebSocket(`${protocol}://${window.location.host}`);
