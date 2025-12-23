@@ -1,21 +1,25 @@
 /* Javascript to manage user interface */
 
-const deviceList = document.getElementById('deviceList');
-const myName = document.getElementById('devicename');
+const deviceList = document.getElementById('device-list');
+const myName = document.getElementById('device-name');
 
-function renderDevicesOnScreen(devicesOnline, myId) {
+function createDeviceElement(device) {
+  const deviceElement = document.createElement('div');
+  deviceElement.id = device.deviceId;
+  deviceElement.className = 'device';
+  deviceElement.setAttribute('onclick', `selectPeer('${device.deviceId}')`);
+  deviceElement.innerHTML = `
+    <img src="./assets/svg/broadcast.svg" alt="device icon">
+    <span>${device.deviceName}</span>
+  `;
+  return deviceElement;
+}
+
+function showDevices(devicesOnline, myId) {
   deviceList.innerHTML = ''; // detele all nodes
-  devicesOnline.map((aux) => {
-    if (aux.deviceId != myId) {
-      const device = document.createElement('div');
-      device.id = aux.deviceId;
-      device.className = 'device';
-      device.setAttribute("onclick", `selectPeer('${aux.deviceId}')`);
-      device.innerHTML = `
-        <img src="./assets/svg/broadcast.svg" alt="device icon">
-        <span>${aux.deviceName}</span>
-      `;
-      deviceList.appendChild(device);
+  devicesOnline.forEach(device => {
+    if (device.deviceId != myId) {
+      deviceList.appendChild(createDeviceElement(device));
     }
   });
 }
@@ -33,4 +37,4 @@ function loadName(deviceName) {
   myName.value = deviceName;
 }
 
-export { renderDevicesOnScreen, sendFile, getDeviceName, loadName };
+export { showDevices, sendFile, getDeviceName, loadName };
